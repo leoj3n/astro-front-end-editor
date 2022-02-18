@@ -1,0 +1,16 @@
+{
+  "name": "@example/my-plugin-demo",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "astro dev",
+    "build": "astro build",
+    "serve": "astro preview"
+  },
+  "devDependencies": {
+    "plugin-front-end-editor": "0.1.0",
+    "@example/my-plugin": "0.1.0",
+    "astro": "latest"
+  }
+}

@@ -1,0 +1,87 @@
+---
+import Tour from '../components/Tour.astro';
+
+// Component Imports
+import Counter from '../components/Counter.jsx';
+const someProps = {
+	count: 0,
+};
+
+// Full Astro Component Syntax:
+// https://docs.astro.build/core-concepts/astro-components/
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<style>
+			html,
+			body {
+				font-family: system-ui;
+				margin: 0;
+			}
+			body {
+				padding: 2rem;
+			}
+			.pink-bg {
+				background-color: pink;
+			}
+			.black-border {
+				border: 2px dashed black;
+			}
+			.small-width {
+				max-width: 200px;
+			}
+			.float-left {
+				float: left;
+				margin-right: 50px;
+			}
+			.float-container {
+				overflow: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<Counter {...someProps} client:visible>
+				<h1>
+					<!-- (editor="textarea" maxlength="50") -->
+					Hello, React!!!
+					<!-- (editor) -->
+				</h1>
+			</Counter>
+
+			<div class="float-container">
+				<div class="float-left black-border">
+					<h2>Start date:</h2>
+					<!-- (EDITOR="input" type="date" max="2018-12-31" min="2010-10-10") -->
+					<p>2018-07-22</p>
+					<!-- (EDITOR) -->
+				</div>
+
+				<div class="float-left pink-bg">
+					<!-- (EDITOR="code" lang="html") -->
+					<h3>Here is a nice component:</h3>
+					<Tour />
+					<p>That's all folks...</p>
+					<!-- (EDITOR) -->
+				</div>
+			</div>
+
+			<!-- (EDITOR="code" lang="html") -->
+			<div class="pink-bg black-border small-width">
+				<h6>A Heading</h6>
+				<p>Some content</p>
+			</div>
+			<!-- (EDITOR) -->
+			
+			<script type="text/javascript">
+				// (zEDITOR="code" lang="js" editor-indicator="element")
+				console.log('Hello my front end!');
+				// (zEDITOR)
+			</script>
+		</main>
+	</body>
+</html>
