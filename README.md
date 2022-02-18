@@ -51,6 +51,7 @@ Relevant files to check out:
   - https://github.com/leoj3n/astro-front-end-editor/blob/main/packages/plugin-front-end-editor/src/index.js#L177-L222
     - This is where the rollup plugin hooks in before astro plugins to find instances of `(editor=` and `(editor)` which mark "edit boundaries".
     - The boundary line numbers are sent to the front end by replacing the `editor=` comment with a `<script>` with that info pasted in.
+    - Also pasted into the script tag is an md5 hash of the code file contents. This will be used by the front end editor to verify line numbers will be in the correct place (i.e. the file hasn't changed in the backend since this instance of front end injection).
     - `magicString.overwrite` replaces the original source file contents in the determined line range with this script tag while replacing the first editor comment and removing the last.
       - `magicString` also generates a source map for the changes. I am not sure if this is necessary?
       - `magicString` was used in the rollup plugin this project was based off of:
