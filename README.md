@@ -50,6 +50,10 @@ Relevant files to check out:
   - https://github.com/leoj3n/astro-front-end-editor/blob/main/demo/src/pages/index.astro#L47-L85
   - https://github.com/leoj3n/astro-front-end-editor/blob/main/packages/plugin-front-end-editor/src/index.js#L200-L220
 
+Note this hack using npm postinstall until [PR for config callback](https://github.com/withastro/astro/pull/2611) is approved/merged:
+
+  - https://github.com/leoj3n/astro-front-end-editor/blob/main/package.json#L17
+
 <br>
 <br>
 <br>
