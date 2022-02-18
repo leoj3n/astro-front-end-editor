@@ -44,7 +44,24 @@ Injected buttons with line mappings are working.
 
 @TODO next is to have a "textarea" editor connect to backend server to pull file contents at specified line number, and replace with changes upon user save from front end.
 
-# Astro Starter Kit: Plugin (save here for reference)
+Relevant files to check out:
+
+  - https://github.com/leoj3n/astro-front-end-editor/blob/main/demo/astro.config.js#L6-L25
+  - https://github.com/leoj3n/astro-front-end-editor/blob/main/demo/src/pages/index.astro#L47-L85
+  - https://github.com/leoj3n/astro-front-end-editor/blob/main/packages/plugin-front-end-editor/src/index.js#L200-L220
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## Astro Starter Kit: Plugin (save here for reference)
 
 ```shell
 npm init astro -- --template astro-community/plugin-template
