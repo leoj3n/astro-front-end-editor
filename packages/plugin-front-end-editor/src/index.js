@@ -41,7 +41,10 @@ export default function editor(options = {}) {
 
     transform(code, id) {
       if (!filter(id)) return null;
-      return executeReplacement(code, id);
+      const ret = executeReplacement(code, id);
+			console.log('id is...', id);
+			console.log('ret is...', ret);
+			return ret;
     }
   };
 
@@ -49,116 +52,9 @@ export default function editor(options = {}) {
     const magicString = new MagicString(code);
     if (!codeHasReplacements(code, id, magicString)) {
       return null;
-    } else {
-			magicString.appendLeft(code.indexOf('</head>'), `
-				<script type="text/javascript">
-				const styleToAdd = \`
-				<style type="text/css">
-				.editorReset {
-				  background: none;
-					border: none;
-					bottom: auto;
-					box-shadow: none;
-					color: black;
-					cursor: auto;
-					display: inline;
-					float: none;
-					font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-					font-size: inherit;
-					font-style: normal;
-					font-variant: normal;
-					font-weight: normal;
-					height: auto;
-					left: auto;
-					letter-spacing: 0;
-					line-height: 100%;
-					margin: 0;
-					max-height: none;
-					max-width: none;
-					min-height: 0;
-					min-width: 0;
-					opacity: 1;
-					padding: 0;
-					position: static;
-					right: auto;
-					text-align: left;
-					text-decoration: none;
-					text-indent: 0;
-					text-shadow: none;
-					text-transform: none;
-					top: auto;
-					vertical-align: baseline;
-					white-space: normal;
-					width: auto;
-					z-index: 2140000000;
-				}
-				.editorHintMarker {
-					cursor: pointer;
-					position: absolute;
-					display: block;
-					top: -1px;
-					left: -1px;
-					white-space: nowrap;
-					overflow: hidden;
-					font-size: 11px;
-					padding: 1px 3px 0px 3px;
-					background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF785), color-stop(100%,#FFC542));
-					border: solid 1px #C38A22;
-					border-radius: 3px;
-					box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);
-				}
-				</style>\`;
-				document.head.insertAdjacentHTML('beforeend', styleToAdd)
-				</script>
-			  <script type="text/javascript">
-					function addElementList(els, overlayOptions) {
-						const parent = this.createElement('div');
-						if (overlayOptions.id != null) { parent.id = overlayOptions.id; }
-						if (overlayOptions.className != null) { parent.className = overlayOptions.className; }
-						for (let el of els) { parent.appendChild(el); }
+    }
 
-						document.documentElement.appendChild(parent);
-						return parent;
-					}
-
-					function createElement(tagName) {
-						const element = document.createElement(tagName);
-						if (element instanceof HTMLElement) {
-							this.createElement = tagName => document.createElement(tagName);
-							return element;
-						} else {
-							this.createElement = tagName => document.createElementNS('http://www.w3.org/1999/xhtml', tagName);
-							return this.createElement(tagName);
-						}
-					}
-
-					let editorMarkers = [];
-
-					function attachEditor(opts) {
-						console.log('EDITOR ATTACH', opts);
-
-						let attachToEl = document.getElementById(opts.scriptId);
-						attachToEl = attachToEl.nextElementSibling || attachToEl.parentElement;
-						if (opts.elementId !== 'undefined') { attachToEl = document.getElementById(opts.elementId); }
-
-						const el = createElement('div');
-						el.textContent = 'Edit';
-						el.rect = attachToEl.getBoundingClientRect();
-						el.style.left = el.rect.left + 'px';
-						el.style.top = el.rect.top  + 'px';
-						el.className = 'editorReset editorHintMarker';
-						editorMarkers.push(el);
-					}
-					window.addEventListener('load', function(){
-						let editorMarkerContainingDiv = addElementList(
-							editorMarkers,
-							{id: 'editorHintMarkerContainer', className: 'editorReset'});
-					});
-			  </script>
-			`);
-		}
-
-		console.log(magicString.toString());
+		console.log("\n\n\n", 'RESULT......', "\n\n\n\n", magicString.toString());
 
     const result = { code: magicString.toString() };
     if (isSourceMapEnabled()) {
@@ -197,11 +93,13 @@ export default function editor(options = {}) {
 			const endLength = lines.slice(0, boundary.end + 1).join('\n').length;
 			let linesCopy = Array.from(lines);
 
-			const scriptId = `editor-for-lines-${boundary.start}-${boundary.end}`;
+			const scriptId = `editor-${hash}-${boundary.start}-${boundary.end}`;
 
 			linesCopy[boundary.end] = '';
 			linesCopy[boundary.start] = `
-				<script type="text/javascript" id="${scriptId}">
+				<script type="module">
+				import attachEditor from 'plugin-front-end-editor/src/myclient.js';
+
 				document.addEventListener('DOMContentLoaded', function(){
 					attachEditor({
 						type: '${attrs.editor}',
@@ -215,7 +113,9 @@ export default function editor(options = {}) {
 						elementId: '${attrs.elementId}',
 					});
 				});
-				</script>`.replace(/\t/g, '').replace(/\r?\n|\r/g, ' ');
+				</script>
+				<script id="${scriptId}"></script>
+			`.replace(/\t/g, '').replace(/\r?\n|\r/g, ' ');
 
       magicString.overwrite(startLength, endLength, linesCopy.slice(boundary.start, boundary.end + 1).join('\n'));
 

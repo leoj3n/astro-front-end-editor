@@ -1,5 +1,6 @@
 ---
 import Tour from '../components/Tour.astro';
+import blah from 'plugin-front-end-editor/src/myclient.js';
 
 // Component Imports
 import Counter from '../components/Counter.jsx';
@@ -9,6 +10,8 @@ const someProps = {
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/core-concepts/astro-components/
+
+const untrustedHtml = 'string value with <br /> set to the "untrustedHTML" var';
 ---
 
 <html lang="en">
@@ -45,10 +48,17 @@ const someProps = {
 	</head>
 	<body>
 		<main>
-			<Counter {...someProps} client:visible>
+		BLAH is {blah}
+					<Fragment>
+						<h3 onclick="alert('hello');">Edit Me!</h3>
+					</Fragment>
+			<div style="display: contents" onclick="alert('hello');">
+				<h3>contents Me!</h3>
+			</div>
+			<Counter {...someProps} client:visible style="display: contents">
 				<h1>
 					<!-- (editor="textarea" maxlength="50") -->
-					Hello, React!!!
+					Hello, React!
 					<!-- (editor) -->
 				</h1>
 			</Counter>
@@ -58,6 +68,8 @@ const someProps = {
 					<h2>Start date:</h2>
 					<!-- (EDITOR="input" type="date" max="2018-12-31" min="2010-10-10") -->
 					<p>2018-07-22</p>
+					<p>2018-07-22</p>
+					<p>2018-07-22</p>
 					<!-- (EDITOR) -->
 				</div>
 
@@ -65,6 +77,7 @@ const someProps = {
 					<!-- (EDITOR="code" lang="html") -->
 					<h3>Here is a nice component:</h3>
 					<Tour />
+					<p>That's all folks...</p>
 					<p>That's all folks...</p>
 					<!-- (EDITOR) -->
 				</div>

@@ -10,9 +10,9 @@
     "bump:patch": "npm --workspaces --git-tag-version false version patch && npm --git-tag-version false version patch",
     "bump:minor": "npm --workspaces --git-tag-version false version minor && npm --git-tag-version false version minor",
     "bump:major": "npm --workspaces --git-tag-version false version major && npm --git-tag-version false version major",
-    "start": "astro --project-root demo dev",
-    "build": "astro --project-root demo build",
-    "serve": "astro --project-root demo preview",
+    "start": "astro --project-root demo dev --expiremental-static-build",
+    "build": "astro --project-root demo build --expiremental-static-build",
+    "serve": "astro --project-root demo preview --expiremental-static-build",
     "release": "npm --workspaces publish --access public",
     "postinstall": "echo 'post install: adding mergedConfigCallback' && sed -i.bak 's/return viteConfig;/if (typeof viteConfig.mergedConfigCallback === \"function\") { return viteConfig.mergedConfigCallback(viteConfig); }; return viteConfig;/g' ./node_modules/astro/dist/core/create-vite.js"
   },
@@ -35,7 +35,7 @@
     ]
   },
   "devDependencies": {
-    "astro": "^0.22.20"
+    "astro": "^0.23.0"
   },
   "private": true
 }
