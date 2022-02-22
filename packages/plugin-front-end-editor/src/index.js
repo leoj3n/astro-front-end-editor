@@ -42,8 +42,6 @@ export default function editor(options = {}) {
     transform(code, id) {
       if (!filter(id)) return null;
       const ret = executeReplacement(code, id);
-			console.log('id is...', id);
-			console.log('ret is...', ret);
 			return ret;
     }
   };
