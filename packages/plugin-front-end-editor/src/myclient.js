@@ -1,7 +1,8 @@
 let editorMarkers = [];
 
 export default function attachEditor(opts) {
-	if (typeof document === 'undefined') return;
+	//if (typeof document === 'undefined') return;
+	if (import.meta.env.SSR) return;
 
 	console.log('EDITOR ATTACH', opts);
 
